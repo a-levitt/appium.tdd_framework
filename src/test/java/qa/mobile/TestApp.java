@@ -1,9 +1,11 @@
 package qa.mobile;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
+import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -27,16 +29,27 @@ public class TestApp {
 
         //WebElement textError = driver.findElement(AppiumBy.accessibilityId("test-Error message"));
         WebElement textError = driver.findElement(AppiumBy.xpath( "//android.widget.TextView[@text=\"Username and password do not match any user in this service.\"]"));
+        String actualErrorText = textError.getAttribute("text");
 
-        Assert.assertEquals(textError.getText(), "Username and password do not match any user in this service.");
+        Assert.assertEquals(actualErrorText, "Username and password do not match any user in this service.");
     }
 
-    // test-Error message
-    //        new UiSelector().text("Username and password do not match any user in this service.")
-    //        //android.widget.TextView[@text="Username and password do not match any user in this service."]
 
+    @Test
+    public void invalidPassword() {
+        WebElement fieldUserName = driver.findElement(AppiumBy.accessibilityId("test-Username"));
+        fieldUserName.sendKeys("standard_user");
+        WebElement fieldPassword = driver.findElement(AppiumBy.accessibilityId("test-Password"));
+        fieldPassword.sendKeys("123");
+        WebElement buttonLogin = driver.findElement(AppiumBy.accessibilityId("test-LOGIN"));
+        buttonLogin.click();
 
-    //test-PRODUCTS
+        //WebElement textError = driver.findElement(AppiumBy.accessibilityId("test-Error message"));
+        WebElement textError = driver.findElement(AppiumBy.xpath( "//android.widget.TextView[@text=\"Username and password do not match any user in this service.\"]"));
+        String actualErrorText = textError.getAttribute("text");
+
+        Assert.assertEquals(actualErrorText, "Username and password do not match any user in this service.");
+    }
 
     @BeforeClass
     public void beforeClass() throws MalformedURLException {
