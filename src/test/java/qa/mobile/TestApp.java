@@ -49,7 +49,7 @@ public class TestApp {
         Assert.assertEquals(actualErrorText, "Username and password do not match any user in this service.");
     }
 
-    @Test
+    @Test(priority=2)
     public void correctEnter() {
         WebElement fieldUserName = driver.findElement(AppiumBy.accessibilityId("test-Username"));
         fieldUserName.sendKeys("standard_user");
@@ -59,10 +59,9 @@ public class TestApp {
         buttonLogin.click();
 
         WebElement productsPage = driver.findElement(AppiumBy.
-                xpath("//android.widget.ScrollView[@content-desc='test-PRODUCTS']" +
-                                                "/preceding-sibling::android.view.ViewGroup[2]"));
-        boolean isTitleDisplayed = productsPage.isDisplayed();
-        Assert.assertTrue(isTitleDisplayed);
+                xpath("//android.widget.TextView[@text='PRODUCTS']"));
+        String productsTitle = productsPage.getAttribute("text");
+        Assert.assertEquals(productsTitle, "PRODUCTS");
     }
 
     @BeforeClass
