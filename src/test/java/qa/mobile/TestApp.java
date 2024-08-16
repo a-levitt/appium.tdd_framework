@@ -1,11 +1,9 @@
 package qa.mobile;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
-import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -51,6 +49,22 @@ public class TestApp {
         Assert.assertEquals(actualErrorText, "Username and password do not match any user in this service.");
     }
 
+    @Test
+    public void correctEnter() {
+        WebElement fieldUserName = driver.findElement(AppiumBy.accessibilityId("test-Username"));
+        fieldUserName.sendKeys("standard_user");
+        WebElement fieldPassword = driver.findElement(AppiumBy.accessibilityId("test-Password"));
+        fieldPassword.sendKeys("secret_sauce");
+        WebElement buttonLogin = driver.findElement(AppiumBy.accessibilityId("test-LOGIN"));
+        buttonLogin.click();
+
+        WebElement productsPage = driver.findElement(AppiumBy.
+                xpath("//android.widget.ScrollView[@content-desc='test-PRODUCTS']" +
+                                                "/preceding-sibling::android.view.ViewGroup[2]"));
+        boolean isTitleDisplayed = productsPage.isDisplayed();
+        Assert.assertTrue(isTitleDisplayed);
+    }
+
     @BeforeClass
     public void beforeClass() throws MalformedURLException {
                 UiAutomator2Options options = new UiAutomator2Options()
@@ -75,6 +89,6 @@ public class TestApp {
 
     @AfterClass
     public void afterClass() {
-        //driver.quit();
+        driver.quit();
     }
 }
