@@ -3,7 +3,7 @@
 <suite name="Suite1" verbose="1">
     <test name="Test">
         <classes>
-            <class name="qa.mobile.TestApp"/>
+            <class name="qa.mobile.BaseTest"/>
         </classes>
     </test>
 </suite>
