@@ -3,5 +3,5 @@
 /workspace.xml
 
 /src/main/java/secure/*
-/src/main/resources/app/*
+src/main/resources/app/
 
