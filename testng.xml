@@ -1,12 +1,12 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<suite name="Suite1" parallel="false"> <!-- parallel="tests" -->
+<suite name="Test Suite" parallel="false"> <!-- parallel="tests" -->
     <test name="Test">
         <parameter name="platformName" value="Android" />
         <parameter name="platformVersion" value="13" />
         <parameter name="deviceName" value="Any device name" />
         <classes>
-            <class name="com.qa.BaseTest"/>
+            <class name="com.qa.tests.LoginTests"/>
         </classes>
     </test>
 <!--    <test name="Test2">

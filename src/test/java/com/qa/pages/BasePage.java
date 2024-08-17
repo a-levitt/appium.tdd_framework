@@ -10,11 +10,11 @@ import java.time.Duration;
 
 
 public class BasePage {
-    public AppiumDriver driver;
+    protected AppiumDriver driver;
 
-    public BasePage(AppiumDriver driver) {
+/*    public BasePage(AppiumDriver driver) {
         this.driver = driver;
-    }
+    }*/
 
     public void waitForVisibility(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TestUtils.WAIT));

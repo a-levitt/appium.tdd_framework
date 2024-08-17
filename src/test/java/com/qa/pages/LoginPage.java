@@ -8,10 +8,10 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage extends BasePage {
 
-    public LoginPage(AppiumDriver driver) {
+/*    public LoginPage(AppiumDriver driver) {
         super(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-    }
+    }*/
 
     @AndroidFindBy (accessibility = "test-Username")
     private WebElement fieldUserName;
@@ -32,8 +32,12 @@ public class LoginPage extends BasePage {
         return this;
     }
 
+    public String getErrorText() {
+        return getAttribute(textError, "text");
+    }
+
     public ProductsPage pressLogin() {
         click(buttonLogin);
-        return new ProductsPage(driver);
+        return new ProductsPage();
     }
 }
