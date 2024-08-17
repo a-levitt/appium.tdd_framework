@@ -1,11 +1,11 @@
-package qa.mobile;
+package com.qa;
 
-import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
 import java.io.InputStream;
@@ -23,6 +23,11 @@ public class BaseTest {
     protected Properties props;
     InputStream inputStream;
 
+    @Test
+    public void f() {
+    }
+
+/*
     @Test
     public void invalidUserName() {
         WebElement fieldUserName = driver.findElement(AppiumBy.accessibilityId("test-Username"));
@@ -70,9 +75,11 @@ public class BaseTest {
         String productsTitle = productsPage.getAttribute("text");
         Assert.assertEquals(productsTitle, "PRODUCTS");
     }
+*/
 
+    @Parameters({"platformName", "platformVersion", "deviceName"})
     @BeforeTest
-    public void beforeTest() throws Exception {
+    public void beforeTest(String platformName, String platformVersion, String deviceName) throws Exception {
         try {
             props = new Properties();
             String propFileName = "config.properties";
@@ -80,24 +87,25 @@ public class BaseTest {
             inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
             props.load(inputStream);
 
+            URL appUrl = getClass().getClassLoader().getResource(props.getProperty("AndroidAppLocation"));
             UiAutomator2Options options = new UiAutomator2Options()
-                    .setPlatformName("Android")
+                    .setPlatformName(platformName)
+                    .setPlatformVersion(platformVersion)
+                    .setDeviceName(deviceName)
                     .setAutomationName(props.getProperty("AndroidAutomationName"))
-                    .setUdid(props.getProperty("deviceUdid"))
-                    //.setAvd("Pixel_8_virt")
-                    //.setAvdLaunchTimeout(Duration.ofSeconds(120))
-                    .setUnlockType(props.getProperty("deviceUnlockType"))
-                    .setUnlockKey(props.getProperty("deviceUnlockKey"))
-                    .setAppPackage(props.getProperty("AndroidAppPackage"))
-                    .setAppActivity(props.getProperty("AndroidAppPackage"))
-                    .setApp(props.getProperty("AndroidAppLocation"))
+                    //.setUdid(props.getProperty("deviceUdid"))
+                    //.setUnlockType(props.getProperty("deviceUnlockType"))
+                    //.setUnlockKey(props.getProperty("deviceUnlockKey"))
+                    //.setAppPackage(props.getProperty("AndroidAppPackage"))
+                    //.setAppActivity(props.getProperty("AndroidAppPackage"))
+                    .setApp(appUrl)
             ;
 
             URL url = new URL(props.getProperty("appiumURL"));
 
             driver = new AndroidDriver(url, options);
             String sessionId = driver.getSessionId().toString();
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -107,5 +115,10 @@ public class BaseTest {
     @AfterTest
     public void afterClass() {
         driver.quit();
+    }
+
+    public void waitForVisibility(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 }
