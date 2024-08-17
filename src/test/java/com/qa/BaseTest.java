@@ -1,5 +1,6 @@
 package com.qa;
 
+import com.qa.utils.TestUtils;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
@@ -15,8 +16,9 @@ import java.util.Properties;
 
 public class BaseTest {
 
-    // remove from BaseTest class PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-    // in every page constructor:
+    // remove from BaseTest class constructor:
+    //      PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+    // in every page constructor like:
     //      public LoginPage() { PageFactory.initElements(new AppiumFieldDecorator(driver), this); }
 
     protected AppiumDriver driver;
@@ -113,12 +115,27 @@ public class BaseTest {
     }
 
     @AfterTest
-    public void afterClass() {
+    public void afterTest() {
         driver.quit();
     }
 
     public void waitForVisibility(WebElement element) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TestUtils.WAIT));
         wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public void click(WebElement element) {
+        waitForVisibility(element);
+        element.click();
+    }
+
+    public void sendKeys(WebElement element, String text) {
+        waitForVisibility(element);
+        element.sendKeys(text);
+    }
+
+    public void getAttribute(WebElement element, String attribute) {
+        waitForVisibility(element);
+        element.getAttribute(attribute);
     }
 }
