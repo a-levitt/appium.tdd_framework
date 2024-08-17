@@ -6,7 +6,7 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage  extends BasePage {
+public class LoginPage extends BasePage {
 
     public LoginPage(AppiumDriver driver) {
         super(driver);
@@ -34,6 +34,6 @@ public class LoginPage  extends BasePage {
 
     public ProductsPage pressLogin() {
         click(buttonLogin);
-        return new ProductsPage();
+        return new ProductsPage(driver);
     }
 }

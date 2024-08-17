@@ -31,8 +31,8 @@ public class BasePage {
         element.sendKeys(text);
     }
 
-    public void getAttribute(WebElement element, String attribute) {
+    public String getAttribute(WebElement element, String attribute) {
         waitForVisibility(element);
-        element.getAttribute(attribute);
+        return element.getAttribute(attribute);
     }
 }
