@@ -42,8 +42,9 @@ public class BaseTest {
                     //.setUdid(props.getProperty("deviceUdid"))
                     .setUnlockType(props.getProperty("deviceUnlockType"))
                     .setUnlockKey(props.getProperty("deviceUnlockKey"))
-                    //.setAppPackage(props.getProperty("AndroidAppPackage"))
-                    //.setAppActivity(props.getProperty("AndroidAppPackage"))
+                    .setAppWaitActivity(props.getProperty("AndroidAppWaitActivity"))
+                    .setAppPackage(props.getProperty("AndroidAppPackage"))
+                    .setAppActivity(props.getProperty("AndroidAppActivity"))
                     .setApp(appPath)
             ;
 

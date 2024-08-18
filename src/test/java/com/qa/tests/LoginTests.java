@@ -21,7 +21,7 @@ public class LoginTests extends BaseTest {
 
     @BeforeMethod
     public void beforeMethod(Method method) {
-        loginPage = new LoginPage();
+        loginPage = new LoginPage(driver);
         System.out.println("\n ***** starting test: " + method.getName() + "***** \n");
     }
 
@@ -43,7 +43,7 @@ public class LoginTests extends BaseTest {
         checkErrorDisplaying(loginPage);
     }
 
-    @Test
+    @Test (priority = 2)
     public void testLoginPositive() {
         loginPage.enterUsername(TestUtils.USER_NAME);
         loginPage.enterPassword(TestUtils.PASSWORD);

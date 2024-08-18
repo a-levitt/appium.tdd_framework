@@ -9,10 +9,10 @@ import org.openqa.selenium.support.PageFactory;
 
 public class ProductsPage extends BasePage {
 
-/*    public ProductsPage(AppiumDriver driver) {
+    public ProductsPage(AppiumDriver driver) {
         super(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-    }*/
+    }
 
     @AndroidFindBy (xpath = "//android.widget.TextView[@text='PRODUCTS']")
     private WebElement textProductsTitle;
