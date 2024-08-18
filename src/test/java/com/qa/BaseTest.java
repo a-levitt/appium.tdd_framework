@@ -5,6 +5,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import org.testng.annotations.*;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
@@ -26,7 +27,13 @@ public class BaseTest {
             inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
             props.load(inputStream);
 
-            URL appUrl = getClass().getClassLoader().getResource(props.getProperty("AndroidAppLocation"));
+            //URL appUrl = getClass().getClassLoader().getResource(props.getProperty("AndroidAppLocation"));
+            String appPath =
+            "D:" + File.separator + "Java" + File.separator + "Projects" + File.separator +
+                    "appium.tdd_framework" + File.separator + "src" + File.separator +
+                    "main" + File.separator + "resources" + File.separator +
+                    "app" + File.separator + "Android.SauceLabs.Mobile.Sample.app.2.7.1.apk";
+
             UiAutomator2Options options = new UiAutomator2Options()
                     .setPlatformName(platformName)
                     .setPlatformVersion(platformVersion)
@@ -37,7 +44,7 @@ public class BaseTest {
                     .setUnlockKey(props.getProperty("deviceUnlockKey"))
                     //.setAppPackage(props.getProperty("AndroidAppPackage"))
                     //.setAppActivity(props.getProperty("AndroidAppPackage"))
-                    .setApp(appUrl)
+                    .setApp(appPath)
             ;
 
             URL url = new URL(props.getProperty("appiumURL"));
