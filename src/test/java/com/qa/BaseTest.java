@@ -16,8 +16,8 @@ import java.util.Properties;
 
 public class BaseTest {
 
-    protected AppiumDriver driver;
-    protected Properties props;
+    protected static AppiumDriver driver;
+    protected static Properties props;
     InputStream inputStream;
 
     public void setDriver(AppiumDriver driver) {
@@ -73,7 +73,7 @@ public class BaseTest {
                     .setAppWaitActivity(props.getProperty("AndroidAppWaitActivity"))
                     .setAppPackage(props.getProperty("AndroidAppPackage"))
                     .setAppActivity(props.getProperty("AndroidAppActivity"))
-                    .setApp(appPath)
+                    //.setApp(appPath)
             ;
 
             URL url = new URL(props.getProperty("appiumURL"));
