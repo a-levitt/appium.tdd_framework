@@ -9,19 +9,22 @@ import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
 
-public class LoginTests extends BaseTest {
+public class LoginTests {
 
     LoginPage loginPage;
     ProductsPage productsPage;
+    BaseTest base;
 
+    @Parameters({"platformName", "platformVersion", "deviceName"})
     @BeforeClass
-    public void beforeClass() {
-
+    public void beforeClass(String platformName, String platformVersion, String deviceName) throws Exception {
+        base = new BaseTest();
+        base.initializeDriver(platformName, platformVersion,deviceName);
     }
 
     @BeforeMethod
     public void beforeMethod(Method method) {
-        loginPage = new LoginPage(driver);
+        loginPage = new LoginPage();
         System.out.println("\n ***** starting test: " + method.getName() + "***** \n");
     }
 
@@ -61,7 +64,7 @@ public class LoginTests extends BaseTest {
 
     @AfterClass
     public void afterClass() {
-
+        base.quitDriver();
     }
 
     public void checkErrorDisplaying(LoginPage page) {

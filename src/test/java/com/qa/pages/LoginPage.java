@@ -1,17 +1,12 @@
 package com.qa.pages;
 
-import io.appium.java_client.AppiumDriver;
+import com.qa.BaseTest;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage extends BasePage {
-
-    public LoginPage(AppiumDriver driver) {
-        super(driver);
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-    }
+public class LoginPage {
 
     @AndroidFindBy (accessibility = "test-Username")
     private WebElement fieldUserName;
@@ -22,22 +17,29 @@ public class LoginPage extends BasePage {
     @AndroidFindBy (xpath = "//android.widget.TextView[@text=\"Username and password do not match any user in this service.\"]")
     private WebElement textError;
 
+    BaseTest base;
+
+    public LoginPage() {
+        base = new BaseTest();
+        PageFactory.initElements(new AppiumFieldDecorator(base.getDriver()), this);
+    }
+
     public LoginPage enterUsername(String username) {
-        sendKeys(fieldUserName, username);
+        base.sendKeys(fieldUserName, username);
         return this;
     }
 
     public LoginPage enterPassword(String password) {
-        sendKeys(fieldPassword, password);
+        base.sendKeys(fieldPassword, password);
         return this;
     }
 
     public String getErrorText() {
-        return getAttribute(textError, "text");
+        return base.getAttribute(textError, "text");
     }
 
     public ProductsPage pressLogin() {
-        click(buttonLogin);
-        return new ProductsPage(driver);
+        base.click(buttonLogin);
+        return new ProductsPage();
     }
 }

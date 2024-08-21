@@ -1,13 +1,17 @@
 package com.qa;
 
+import com.qa.utils.TestUtils;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
-import org.testng.annotations.*;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
+import java.time.Duration;
 import java.util.Properties;
 
 public class BaseTest {
@@ -16,9 +20,35 @@ public class BaseTest {
     protected Properties props;
     InputStream inputStream;
 
-    @Parameters({"platformName", "platformVersion", "deviceName"})
-    @BeforeTest
-    public void beforeTest(String platformName, String platformVersion, String deviceName) throws Exception {
+    public void setDriver(AppiumDriver driver) {
+        this.driver = driver;
+    }
+
+    public AppiumDriver getDriver() {
+        return driver;
+    }
+
+    public void waitForVisibility(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TestUtils.WAIT));
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public void click(WebElement element) {
+        waitForVisibility(element);
+        element.click();
+    }
+
+    public void sendKeys(WebElement element, String text) {
+        waitForVisibility(element);
+        element.sendKeys(text);
+    }
+
+    public String getAttribute(WebElement element, String attribute) {
+        waitForVisibility(element);
+        return element.getAttribute(attribute);
+    }
+
+    public void initializeDriver(String platformName, String platformVersion, String deviceName) throws Exception {
         try {
             props = new Properties();
             String propFileName = "config.properties";
@@ -57,8 +87,7 @@ public class BaseTest {
         }
     }
 
-    @AfterTest
-    public void afterTest() {
+    public void quitDriver() {
         driver.quit();
     }
 }
