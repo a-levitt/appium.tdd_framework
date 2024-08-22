@@ -6,7 +6,6 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 import org.testng.annotations.*;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;

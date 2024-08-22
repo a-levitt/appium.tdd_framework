@@ -7,6 +7,8 @@ import com.qa.utils.TestUtils;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 
 public class LoginTests extends BaseTest {
