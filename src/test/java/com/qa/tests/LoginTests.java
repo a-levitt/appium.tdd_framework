@@ -1,24 +1,34 @@
 package com.qa.tests;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qa.BaseTest;
 import com.qa.pages.LoginPage;
 import com.qa.pages.ProductsPage;
-import com.qa.utils.TestUtils;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.lang.reflect.Method;
+import java.util.Map;
 
 public class LoginTests extends BaseTest {
 
     LoginPage loginPage;
     ProductsPage productsPage;
+    Map<String, Map<String, Object>> map
+            = null;
 
     @BeforeClass
     public void beforeClass() {
-
+        ObjectMapper objectMapper = new ObjectMapper();
+        String filePath = getClass().getClassLoader().getResource("data/loginUsers.json").getFile();
+        try {
+            map = objectMapper.readValue(new File(filePath), new TypeReference<Map<String, Map<String, Object>>>() {
+            });
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @BeforeMethod
@@ -29,8 +39,8 @@ public class LoginTests extends BaseTest {
 
     @Test
     public void testUserNameNegative() {
-        loginPage.enterUsername("invalidUserName");
-        loginPage.enterPassword(TestUtils.PASSWORD);
+        loginPage.enterUsername(map.get("invalidUser").get("username").toString());
+        loginPage.enterPassword(map.get("invalidUser").get("password").toString());
         loginPage.pressLogin();
 
         checkErrorDisplaying(loginPage);
@@ -38,8 +48,8 @@ public class LoginTests extends BaseTest {
 
     @Test
     public void testPasswordNegative() {
-        loginPage.enterUsername(TestUtils.USER_NAME);
-        loginPage.enterPassword("invalidPassword");
+        loginPage.enterUsername(map.get("invalidPassword").get("username").toString());
+        loginPage.enterPassword(map.get("invalidPassword").get("password").toString());
         loginPage.pressLogin();
 
         checkErrorDisplaying(loginPage);
@@ -47,8 +57,8 @@ public class LoginTests extends BaseTest {
 
     @Test (priority = 2)
     public void testLoginPositive() {
-        loginPage.enterUsername(TestUtils.USER_NAME);
-        loginPage.enterPassword(TestUtils.PASSWORD);
+        loginPage.enterUsername(map.get("validUserData").get("username").toString());
+        loginPage.enterPassword(map.get("validUserData").get("password").toString());
         productsPage = loginPage.pressLogin();
 
         String actualProductsTitle = productsPage.getTitle();

@@ -3,7 +3,6 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-src/main/java/secure/*
 src/main/resources/app/*
 
 ### IntelliJ IDEA ###
