@@ -29,8 +29,7 @@ public class BaseTest {
 
             //URL appUrl = getClass().getClassLoader().getResource(props.getProperty("AndroidAppLocation"));
             String appPath =
-            "D:" + File.separator + "Java" + File.separator + "Projects" + File.separator +
-                    "appium.tdd_framework" + File.separator + "src" + File.separator +
+                    System.getProperty("user.dir") + File.separator + "src" + File.separator +
                     "main" + File.separator + "resources" + File.separator +
                     "app" + File.separator + "Android.SauceLabs.Mobile.Sample.app.2.7.1.apk";
 
