@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <!-- Error Text -->
+    <string name="err_invalid_user_data">Username and password do not match any user in this service.</string>
+    <string name="products_title">PRODUCTS</string>
+</resources>

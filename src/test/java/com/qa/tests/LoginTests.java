@@ -16,8 +16,7 @@ public class LoginTests extends BaseTest {
 
     LoginPage loginPage;
     ProductsPage productsPage;
-    Map<String, Map<String, Object>> map
-            = null;
+    Map<String, Map<String, Object>> map = null;
 
     @BeforeClass
     public void beforeClass() {
@@ -62,7 +61,7 @@ public class LoginTests extends BaseTest {
         productsPage = loginPage.pressLogin();
 
         String actualProductsTitle = productsPage.getTitle();
-        String expectedProductsTitle = "PRODUCTS";
+        String expectedProductsTitle = strings.get("products_title");
         Assert.assertEquals(actualProductsTitle, expectedProductsTitle);
     }
 
@@ -78,7 +77,7 @@ public class LoginTests extends BaseTest {
 
     public void checkErrorDisplaying(LoginPage page) {
         String actualErrorText = page.getErrorText();
-        String expectedErrorText = "Username and password do not match any user in this service.";
+        String expectedErrorText = strings.get("err_invalid_user_data");
         Assert.assertEquals(actualErrorText, expectedErrorText);
     }
 }
