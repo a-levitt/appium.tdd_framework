@@ -6,6 +6,7 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 import org.testng.annotations.*;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
@@ -28,7 +29,8 @@ public class BaseTest {
 
             //URL appUrl = getClass().getClassLoader().getResource(props.getProperty("AndroidAppLocation"));
             String appPath =
-            System.getProperty("user.dir") + File.separator + "src" + File.separator +
+            "D:" + File.separator + "Java" + File.separator + "Projects" + File.separator +
+                    "appium.tdd_framework" + File.separator + "src" + File.separator +
                     "main" + File.separator + "resources" + File.separator +
                     "app" + File.separator + "Android.SauceLabs.Mobile.Sample.app.2.7.1.apk";
 
