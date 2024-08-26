@@ -3,6 +3,7 @@ package com.qa.pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
@@ -14,12 +15,16 @@ public class LoginPage extends BasePage {
     }
 
     @AndroidFindBy (accessibility = "test-Username")
+    @iOSXCUITFindBy(id = "test-Username")
     private WebElement fieldUserName;
     @AndroidFindBy (accessibility = "test-Password")
+    @iOSXCUITFindBy(id = "test-Password")
     private WebElement fieldPassword;
     @AndroidFindBy (accessibility = "test-LOGIN")
+    @iOSXCUITFindBy(id = "test-LOGIN")
     private WebElement buttonLogin;
     @AndroidFindBy (xpath = "//android.widget.TextView[@text=\"Username and password do not match any user in this service.\"]")
+    @iOSXCUITFindBy (xpath = "//XCUIElementTypeStaticText[@label=\"Username and password do not match any user in this service.\"]")
     private WebElement textError;
 
     public LoginPage enterUsername(String username) {
@@ -33,7 +38,7 @@ public class LoginPage extends BasePage {
     }
 
     public String getErrorText() {
-        return getAttribute(textError, "text");
+        return getText(textError);
     }
 
     public ProductsPage pressLogin() {

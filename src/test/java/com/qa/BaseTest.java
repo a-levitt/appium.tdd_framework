@@ -19,6 +19,7 @@ public class BaseTest {
     protected AppiumDriver driver;
     protected Properties props;
     protected static HashMap<String, String>  strings = new HashMap<>();
+    public static String platform;
     InputStream inputStream;
     InputStream stringsis;
     TestUtils utils;
@@ -27,6 +28,7 @@ public class BaseTest {
     @Parameters({"platformName", "platformVersion", "deviceName"})
     @BeforeTest
     public void beforeTest(String platformName, String platformVersion, String deviceName) throws Exception {
+        platform = platformName;
         URL url;
         try {
             props = new Properties();

@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+import static com.qa.BaseTest.platform;
+
 
 public class BasePage {
     protected AppiumDriver driver;
@@ -29,6 +31,16 @@ public class BasePage {
     public void sendKeys(WebElement element, String text) {
         waitForVisibility(element);
         element.sendKeys(text);
+    }
+
+    public String getText(WebElement element) {
+        switch (platform) {
+            case "Android":
+                return getAttribute(element, "text");
+            case "iOS":
+                return getAttribute(element, "label");
+        }
+        return null;
     }
 
     public String getAttribute(WebElement element, String attribute) {
