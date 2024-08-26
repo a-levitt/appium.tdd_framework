@@ -25,9 +25,9 @@ public class BaseTest {
     TestUtils utils;
 
 
-    @Parameters({"platformName", "platformVersion", "deviceName"})
+    @Parameters({"emulator", "platformName", "platformVersion", "udid", "deviceName"})
     @BeforeTest
-    public void beforeTest(String platformName, String platformVersion, String deviceName) throws Exception {
+    public void beforeTest(String emulator, String platformName, String platformVersion, String deviceName, String udid) throws Exception {
         platform = platformName;
         URL url;
         try {
@@ -51,16 +51,21 @@ public class BaseTest {
 
                     UiAutomator2Options options = new UiAutomator2Options()
                             .setPlatformName(platformName)
-                            .setPlatformVersion(platformVersion)
                             .setDeviceName(deviceName)
-                            .setAutomationName(props.getProperty("AndroidAutomationName"))
-                            .setUnlockType(props.getProperty("deviceUnlockType"))
-                            .setUnlockKey(props.getProperty("deviceUnlockKey"))
-                            .setAppWaitActivity(props.getProperty("AndroidAppWaitActivity"))
-                            .setAppPackage(props.getProperty("AndroidAppPackage"))
-                            .setAppActivity(props.getProperty("AndroidAppActivity"))
-                            .setApp(AndroidAppPath)
-                            ;
+                    ;
+                    options.setAutomationName(props.getProperty("AndroidAutomationName"));
+                    if (emulator.equalsIgnoreCase("true")) {
+                        options.setPlatformVersion(platformVersion);
+                        options.setUnlockType(props.getProperty("deviceUnlockType"));
+                        options.setUnlockKey(props.getProperty("deviceUnlockKey"));
+                    } else {
+                        options.setUdid(udid);
+                    }
+
+                    options.setAppWaitActivity(props.getProperty("AndroidAppWaitActivity"));
+                    options.setAppPackage(props.getProperty("AndroidAppPackage"));
+                    options.setAppActivity(props.getProperty("AndroidAppActivity"));
+                    options.setApp(AndroidAppPath);
 
                     url = new URL(props.getProperty("appiumURL"));
 
@@ -68,11 +73,11 @@ public class BaseTest {
                     break;
 
                 case "iOS":
-                    XCUITestOptions iOSOptions = new XCUITestOptions();
-
-                    iOSOptions.setPlatformName(platformName);
-                    iOSOptions.setPlatformVersion(platformVersion);
-                    iOSOptions.setDeviceName(deviceName);
+                    XCUITestOptions iOSOptions = new XCUITestOptions()
+                            .setPlatformName(platformName)
+                            .setPlatformVersion(platformVersion)
+                            .setDeviceName(deviceName)
+                    ;
                     iOSOptions.setAutomationName(props.getProperty("iOSAutomationName"));
                     iOSOptions.setBundleId(props.getProperty("iOSBundleId"));
 
