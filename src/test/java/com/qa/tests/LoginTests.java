@@ -19,14 +19,15 @@ public class LoginTests extends BaseTest {
     Map<String, Map<String, Object>> map = null;
 
     @BeforeClass
-    public void beforeClass() {
+    public void beforeClass() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         String filePath = getClass().getClassLoader().getResource("data/loginUsers.json").getFile();
         try {
             map = objectMapper.readValue(new File(filePath), new TypeReference<Map<String, Map<String, Object>>>() {
             });
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
         }
     }
 
