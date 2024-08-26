@@ -28,11 +28,13 @@ public class LoginPage extends BasePage {
     private WebElement textError;
 
     public LoginPage enterUsername(String username) {
+        clear(fieldUserName);
         sendKeys(fieldUserName, username);
         return this;
     }
 
     public LoginPage enterPassword(String password) {
+        clear(fieldPassword);
         sendKeys(fieldPassword, password);
         return this;
     }

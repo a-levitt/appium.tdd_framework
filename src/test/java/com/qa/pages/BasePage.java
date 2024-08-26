@@ -23,6 +23,11 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
+    public void clear(WebElement element) {
+        waitForVisibility(element);
+        element.clear();
+    }
+
     public void click(WebElement element) {
         waitForVisibility(element);
         element.click();
