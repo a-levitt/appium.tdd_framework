@@ -2,5 +2,14 @@
 <resources>
     <!-- Error Text -->
     <string name="err_invalid_user_data">Username and password do not match any user in this service.</string>
+    <!-- Products page header -->
     <string name="products_title">PRODUCTS</string>
+
+    <!-- Products page backpack title and price -->
+    <string name="products_backpack_title">Sauce Labs Backpack</string>
+    <string name="products_backpack_price">$29.99</string>
+
+    <!-- Product Backpack details page title and description -->
+    <string name="product_details_backpack_title">Sauce Labs Backpack</string>
+    <string name="product_details_backpack_description">carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.</string>
 </resources>

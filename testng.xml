@@ -17,6 +17,7 @@
                     <include name="testUserNameNegative"/>
                 </methods>
             </class> -->
+            <class name="com.qa.tests.ProductsTests"/>
         </classes>
     </test>
 <!--    <test name="Test2">

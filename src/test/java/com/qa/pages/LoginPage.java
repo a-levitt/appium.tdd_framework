@@ -47,4 +47,10 @@ public class LoginPage extends BasePage {
         click(buttonLogin);
         return new ProductsPage(driver);
     }
+
+    public ProductsPage logIn(String username, String password) {
+        enterUsername(username);
+        enterPassword(password);
+        return pressLogin();
+    }
 }

@@ -3,13 +3,12 @@ package com.qa.pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
-public class ProductsDetailsPage extends MenuPage {
+public class ProductDetailsPage extends MenuPage {
 
-    public ProductsDetailsPage(AppiumDriver driver) {
+    public ProductDetailsPage(AppiumDriver driver) {
         super(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
@@ -27,7 +26,7 @@ public class ProductsDetailsPage extends MenuPage {
         return getText(textProductBackpackTitle);
     }
 
-    public String getBackpackPrice() {
+    public String getBackpackDescription() {
         return getText(textProductBackpackDescription);
     }
 

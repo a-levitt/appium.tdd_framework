@@ -29,6 +29,9 @@ public class LoginTests extends BaseTest {
             e.printStackTrace();
             throw e;
         }
+
+        closeApp();
+        launchApp();
     }
 
     @BeforeMethod

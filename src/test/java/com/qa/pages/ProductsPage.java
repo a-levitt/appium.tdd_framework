@@ -36,6 +36,6 @@ public class ProductsPage extends MenuPage {
 
     public ProductDetailsPage pressBackpackProduct() {
         click(textBackpackTitle);
-        return new ProductDetailsPage();
+        return new ProductDetailsPage(driver);
     }
 }
