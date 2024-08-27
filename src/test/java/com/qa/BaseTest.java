@@ -17,8 +17,8 @@ import java.util.Properties;
 
 public class BaseTest {
 
-    protected AppiumDriver driver;
-    protected Properties props;
+    protected static AppiumDriver driver;
+    protected static Properties props;
     protected static HashMap<String, String>  strings = new HashMap<>();
     public static String platform;
     InputStream inputStream;
