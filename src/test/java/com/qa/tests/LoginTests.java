@@ -74,7 +74,7 @@ public class LoginTests extends BaseTest {
 
     @Test (priority = 2)
     public void testLoginPositive() {
-        // Fetching the inner map for the key "invalidPassword"
+        // Fetching the inner map for the key "validUserData"
         Map<String, Object> validUserDataMap = map.get("validUserData");
 
         // Extracting the username and password

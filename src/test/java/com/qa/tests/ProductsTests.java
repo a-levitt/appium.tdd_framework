@@ -53,9 +53,7 @@ public class ProductsTests extends BaseTest {
 
         SoftAssert sa = new SoftAssert();
 
-        //productsPage = loginPage.logIn(map.get("username").toString(), map.get("password").toString());
-        //productsPage = loginPage.logIn("standard_user", "secret_sauce");
-        // Fetching the inner map for the key "invalidPassword"
+        // Fetching the inner map for the key "validUserData"
         Map<String, Object> validUserDataMap = map.get("validUserData");
 
         // Extracting the username and password
@@ -81,9 +79,7 @@ public class ProductsTests extends BaseTest {
 
         SoftAssert sa = new SoftAssert();
 
-        //productsPage = loginPage.logIn(map.get("username").toString(), map.get("password").toString());
-        //productsPage = loginPage.logIn("standard_user", "secret_sauce");
-        // Fetching the inner map for the key "invalidPassword"
+        // Fetching the inner map for the key "validUserData"
         Map<String, Object> validUserDataMap = map.get("validUserData");
 
         // Extracting the username and password
