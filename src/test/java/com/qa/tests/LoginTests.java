@@ -42,8 +42,15 @@ public class LoginTests extends BaseTest {
 
     @Test
     public void testUserNameNegative() {
-        loginPage.enterUsername(map.get("invalidUser").get("username").toString());
-        loginPage.enterPassword(map.get("invalidUser").get("password").toString());
+        // Fetching the inner map for the key "invalidUser"
+        Map<String, Object> invalidUserMap = map.get("invalidUser");
+
+        // Extracting the username and password
+        String username = (String) invalidUserMap.get("username");
+        String password =(String) invalidUserMap.get("password");
+
+        loginPage.enterUsername(username);
+        loginPage.enterPassword(password);
         loginPage.pressLogin();
 
         checkErrorDisplaying(loginPage);
@@ -51,8 +58,15 @@ public class LoginTests extends BaseTest {
 
     @Test
     public void testPasswordNegative() {
-        loginPage.enterUsername(map.get("invalidPassword").get("username").toString());
-        loginPage.enterPassword(map.get("invalidPassword").get("password").toString());
+        // Fetching the inner map for the key "invalidPassword"
+        Map<String, Object> invalidPasswordMap = map.get("invalidPassword");
+
+        // Extracting the username and password
+        String username = (String) invalidPasswordMap.get("username");
+        String password =(String) invalidPasswordMap.get("password");
+
+        loginPage.enterUsername(username);
+        loginPage.enterPassword(password);
         loginPage.pressLogin();
 
         checkErrorDisplaying(loginPage);
@@ -60,8 +74,15 @@ public class LoginTests extends BaseTest {
 
     @Test (priority = 2)
     public void testLoginPositive() {
-        loginPage.enterUsername(map.get("validUserData").get("username").toString());
-        loginPage.enterPassword(map.get("validUserData").get("password").toString());
+        // Fetching the inner map for the key "invalidPassword"
+        Map<String, Object> validUserDataMap = map.get("validUserData");
+
+        // Extracting the username and password
+        String username = (String) validUserDataMap.get("username");
+        String password =(String) validUserDataMap.get("password");
+
+        loginPage.enterUsername(username);
+        loginPage.enterPassword(password);
         productsPage = loginPage.pressLogin();
 
         String actualProductsTitle = productsPage.getTitle();

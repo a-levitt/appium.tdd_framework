@@ -28,9 +28,11 @@ public class ProductsTests extends BaseTest {
     public void beforeClass() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         String filePath = getClass().getClassLoader().getResource("data/loginUsers.json").getFile();
+        //System.out.println(filePath);
         try {
             map = objectMapper.readValue(new File(filePath), new TypeReference<Map<String, Map<String, Object>>>() {
             });
+            //System.out.println(map);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -51,7 +53,16 @@ public class ProductsTests extends BaseTest {
 
         SoftAssert sa = new SoftAssert();
 
-        productsPage = loginPage.logIn(map.get("username").toString(), map.get("password").toString());
+        //productsPage = loginPage.logIn(map.get("username").toString(), map.get("password").toString());
+        //productsPage = loginPage.logIn("standard_user", "secret_sauce");
+        // Fetching the inner map for the key "invalidPassword"
+        Map<String, Object> validUserDataMap = map.get("validUserData");
+
+        // Extracting the username and password
+        String username = (String) validUserDataMap.get("username");
+        String password =(String) validUserDataMap.get("password");
+
+        productsPage = loginPage.logIn(username, password);
 
         String backpackTitle = productsPage.getBackpackTitle();
         sa.assertEquals(backpackTitle, strings.get("products_backpack_title"));
@@ -70,7 +81,16 @@ public class ProductsTests extends BaseTest {
 
         SoftAssert sa = new SoftAssert();
 
-        productsPage = loginPage.logIn(map.get("username").toString(), map.get("password").toString());
+        //productsPage = loginPage.logIn(map.get("username").toString(), map.get("password").toString());
+        //productsPage = loginPage.logIn("standard_user", "secret_sauce");
+        // Fetching the inner map for the key "invalidPassword"
+        Map<String, Object> validUserDataMap = map.get("validUserData");
+
+        // Extracting the username and password
+        String username = (String) validUserDataMap.get("username");
+        String password =(String) validUserDataMap.get("password");
+
+        productsPage = loginPage.logIn(username, password);
 
         productDetailsPage =  productsPage.pressBackpackProduct();
 
@@ -95,11 +115,5 @@ public class ProductsTests extends BaseTest {
     @AfterClass
     public void afterClass() {
 
-    }
-
-    public void checkErrorDisplaying(LoginPage page) {
-        String actualErrorText = page.getErrorText();
-        String expectedErrorText = strings.get("err_invalid_user_data");
-        Assert.assertEquals(actualErrorText, expectedErrorText);
     }
 }
