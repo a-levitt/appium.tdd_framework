@@ -18,8 +18,10 @@ public class ProductsPage extends MenuPage {
     @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@label=\"PRODUCTS\"]")
     private WebElement textProductsTitle;
     @AndroidFindBy (xpath = "//android.widget.TextView[@content-desc=\"test-Item title\" and @text=\"Sauce Labs Backpack\"]")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"test-Item title\"])[1]")
     private WebElement textBackpackTitle;
     @AndroidFindBy (xpath = "//android.widget.TextView[@content-desc=\"test-Price\" and @text=\"$29.99\"]")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"test-Price\"])[1]")
     private WebElement textBackpackPrice;
 
     public String getTitle() {
