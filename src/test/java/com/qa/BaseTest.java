@@ -81,6 +81,7 @@ public class BaseTest {
                     ;
                     iOSOptions.setAutomationName(props.getProperty("iOSAutomationName"));
                     iOSOptions.setBundleId(props.getProperty("iOSBundleId"));
+                    iOSOptions.simpleIsVisibleCheck();
 
                     String iOSAppPath =
                             System.getProperty("user.dir") + File.separator + "src" + File.separator +
