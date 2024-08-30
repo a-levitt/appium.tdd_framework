@@ -46,12 +46,6 @@ public class ProductsTests extends BaseTest {
     public void beforeMethod(Method method) {
         loginPage = new LoginPage(driver);
         System.out.println("\n ***** starting test: " + method.getName() + "***** \n");
-    }
-
-    @Test
-    public void testProductOnProductsPagePositive() {
-
-        SoftAssert sa = new SoftAssert();
 
         // Fetching the inner map for the key "validUserData"
         Map<String, Object> validUserDataMap = map.get("validUserData");
@@ -61,6 +55,12 @@ public class ProductsTests extends BaseTest {
         String password =(String) validUserDataMap.get("password");
 
         productsPage = loginPage.logIn(username, password);
+    }
+
+    @Test
+    public void testProductOnProductsPagePositive() {
+
+        SoftAssert sa = new SoftAssert();
 
         String backpackTitle = productsPage.getBackpackTitle();
         sa.assertEquals(backpackTitle, strings.get("products_backpack_title"));
@@ -68,8 +68,8 @@ public class ProductsTests extends BaseTest {
         String backpackPrice = productsPage.getBackpackPrice();
         sa.assertEquals(backpackPrice, strings.get("products_backpack_price"));
 
-        settingsPage = productsPage.pressSettingsBtn();
-        loginPage = settingsPage.pressLogoutBtn();
+        //settingsPage = productsPage.pressSettingsBtn();
+        //loginPage = settingsPage.pressLogoutBtn();
 
         sa.assertAll();
     }
@@ -78,15 +78,6 @@ public class ProductsTests extends BaseTest {
     public void testProductDetailsOnBackpackPagePositive() {
 
         SoftAssert sa = new SoftAssert();
-
-        // Fetching the inner map for the key "validUserData"
-        Map<String, Object> validUserDataMap = map.get("validUserData");
-
-        // Extracting the username and password
-        String username = (String) validUserDataMap.get("username");
-        String password =(String) validUserDataMap.get("password");
-
-        productsPage = loginPage.logIn(username, password);
 
         productDetailsPage =  productsPage.pressBackpackProduct();
 
@@ -97,15 +88,16 @@ public class ProductsTests extends BaseTest {
         sa.assertEquals(backpackProductDescription, strings.get("product_details_backpack_description"));
 
         productsPage = productDetailsPage.pressBackToProductsBtn();
-        settingsPage = productsPage.pressSettingsBtn();
-        loginPage = settingsPage.pressLogoutBtn();
+        //settingsPage = productsPage.pressSettingsBtn();
+        //loginPage = settingsPage.pressLogoutBtn();
 
         sa.assertAll();
     }
 
     @AfterMethod
     public void afterMethod() {
-
+        closeApp();
+        launchApp();
     }
 
     @AfterClass
