@@ -59,13 +59,22 @@ public class BasePage {
                     "new UiScrollable(new UiSelector().description(\"test-Inventory item page\"))" +
                             ".scrollIntoView(new UiSelector().description(\"test-Price\"));"));*/
             case "iOS":
-                RemoteWebElement element = (RemoteWebElement) driver.findElement(AppiumBy.className("XCUIElementTypeScrollView"));
+/*                RemoteWebElement element = (RemoteWebElement) driver.findElement(AppiumBy.className("XCUIElementTypeScrollView"));
                 String elementID = element.getId();
                 HashMap<String, String> scrollObject = new HashMap<>();
                 scrollObject.put("element", elementID);
-                scrollObject.put("direction", "up");
+                scrollObject.put("direction", "down");
                 driver.executeScript("mobile:scroll", scrollObject);
-                return element;
+                return element;*/
+
+                RemoteWebElement parent = (RemoteWebElement) driver.findElement(AppiumBy.className("XCUIElementTypeScrollView"));
+                String parentID = parent.getId();
+                HashMap<String, String> scrollObject = new HashMap<>();
+                scrollObject.put("element", parentID);
+                //scrollObject.put("name", "test-Price");
+                scrollObject.put("predicatedString", "label == '$29.99'");
+                driver.executeScript("mobile:scroll", scrollObject);
+                return parent;
         }
         return null;
     }
