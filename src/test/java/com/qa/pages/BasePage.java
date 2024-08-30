@@ -1,6 +1,7 @@
 package com.qa.pages;
 
 import com.qa.utils.TestUtils;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -44,6 +45,12 @@ public class BasePage {
                 return getAttribute(element, "label");
         }
         return null;
+    }
+
+    public WebElement scrollToElement() {
+        return driver.findElement(AppiumBy.androidUIAutomator(
+                "new UiScrollable(new UiSelector().description(\"test-Inventory item page\"))" +
+                ".scrollIntoView(new UiSelector().description(\"test-Price\"));"));
     }
 
     public String getAttribute(WebElement element, String attribute) {

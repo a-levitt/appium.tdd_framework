@@ -11,12 +11,12 @@
         <parameter name="udid" value="REALDEVICEUDID" />
         <parameter name="deviceName" value="Any device name" />
         <classes>
-            <class name="com.qa.tests.LoginTests"/>
-            <!-- <class name="com.qa.tests.LoginTests">
-                <methods>
-                    <include name="testUserNameNegative"/>
-                </methods>
-            </class> -->
+             <!-- <class name="com.qa.tests.LoginTests"/>-->
+             <!-- <class name="com.qa.tests.LoginTests">
+                 <methods>
+                     <include name="testUserNameNegative"/>
+                 </methods>
+             </class> -->
             <class name="com.qa.tests.ProductsTests"/>
         </classes>
     </test>

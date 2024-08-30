@@ -7,7 +7,6 @@ import com.qa.pages.LoginPage;
 import com.qa.pages.ProductDetailsPage;
 import com.qa.pages.ProductsPage;
 import com.qa.pages.SettingsPage;
-import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
@@ -68,13 +67,10 @@ public class ProductsTests extends BaseTest {
         String backpackPrice = productsPage.getBackpackPrice();
         sa.assertEquals(backpackPrice, strings.get("products_backpack_price"));
 
-        //settingsPage = productsPage.pressSettingsBtn();
-        //loginPage = settingsPage.pressLogoutBtn();
-
         sa.assertAll();
     }
 
-    @Test
+    @Test (priority = 2)
     public void testProductDetailsOnBackpackPagePositive() {
 
         SoftAssert sa = new SoftAssert();
@@ -87,15 +83,21 @@ public class ProductsTests extends BaseTest {
         String backpackProductDescription = productDetailsPage.getBackpackDescription();
         sa.assertEquals(backpackProductDescription, strings.get("product_details_backpack_description"));
 
+        //productDetailsPage.scrollToBackpackPrice();
+        //String backpackProductPrice = productDetailsPage.getBackpackPrice();
+
+        String backpackProductPrice = productDetailsPage.scrollToBackpackPriceAndGet();
+        sa.assertEquals(backpackProductPrice, strings.get("product_details_backpack_price"));
+
         productsPage = productDetailsPage.pressBackToProductsBtn();
-        //settingsPage = productsPage.pressSettingsBtn();
-        //loginPage = settingsPage.pressLogoutBtn();
 
         sa.assertAll();
     }
 
     @AfterMethod
     public void afterMethod() {
+        //settingsPage = productsPage.pressSettingsBtn();
+        //loginPage = settingsPage.pressLogoutBtn();
         closeApp();
         launchApp();
     }
