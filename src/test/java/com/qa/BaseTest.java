@@ -138,4 +138,8 @@ public class BaseTest {
                 break;
         }
     }
+
+    public AppiumDriver getDriver() {
+        return driver;
+    }
 }
