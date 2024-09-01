@@ -53,7 +53,7 @@ public class ProductsTests extends BaseTest {
         String username = (String) validUserDataMap.get("username");
         String password =(String) validUserDataMap.get("password");
 
-        productsPage = loginPage.logIn(username + "123", password);
+        productsPage = loginPage.logIn(username, password);
     }
 
     @Test

@@ -7,12 +7,15 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
+import io.appium.java_client.screenrecording.CanRecordScreen;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
+import java.util.Base64;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class BaseTest {
@@ -112,6 +115,34 @@ public class BaseTest {
             if (stringsis != null) {
                 stringsis.close();
             }
+        }
+    }
+
+    @BeforeMethod
+    public void beforeMethod() {
+        ((CanRecordScreen) driver).startRecordingScreen();
+    }
+
+    @AfterMethod
+    public void afterMethod(ITestResult result) {
+        String media = ((CanRecordScreen) driver).stopRecordingScreen();
+        Map<String, String> params = new HashMap<>();
+        params = result.getTestContext().getCurrentXmlTest().getAllParameters();
+        String dir = "Videos" + File.separator +  params.get("platformName") + "_" +
+                params.get("platformVersion") + "_" + params.get("deviceName") + File.separator +
+                dateTime + File.separator + result.getTestClass().getRealClass().getSimpleName();
+        File videoDir = new File(dir);
+        if (!videoDir.exists()) {
+            videoDir.mkdirs();
+        }
+        try {
+            FileOutputStream stream = new FileOutputStream(videoDir + File.separator +
+                    result.getName() + ".mp4");
+            stream.write(Base64.getDecoder().decode(media));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
