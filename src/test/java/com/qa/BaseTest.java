@@ -126,23 +126,26 @@ public class BaseTest {
     @AfterMethod
     public void afterMethod(ITestResult result) {
         String media = ((CanRecordScreen) driver).stopRecordingScreen();
-        Map<String, String> params = new HashMap<>();
-        params = result.getTestContext().getCurrentXmlTest().getAllParameters();
-        String dir = "Videos" + File.separator +  params.get("platformName") + "_" +
-                params.get("platformVersion") + "_" + params.get("deviceName") + File.separator +
-                dateTime + File.separator + result.getTestClass().getRealClass().getSimpleName();
-        File videoDir = new File(dir);
-        if (!videoDir.exists()) {
-            videoDir.mkdirs();
-        }
-        try {
-            FileOutputStream stream = new FileOutputStream(videoDir + File.separator +
-                    result.getName() + ".mp4");
-            stream.write(Base64.getDecoder().decode(media));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        if (result.getStatus() == 2) {
+            Map<String, String> params = new HashMap<>();
+            params = result.getTestContext().getCurrentXmlTest().getAllParameters();
+            String dir = "Videos" + File.separator +  params.get("platformName") + "_" +
+                    params.get("platformVersion") + "_" + params.get("deviceName") + File.separator +
+                    dateTime + File.separator + result.getTestClass().getRealClass().getSimpleName();
+            File videoDir = new File(dir);
+            if (!videoDir.exists()) {
+                videoDir.mkdirs();
+            }
+            try {
+                FileOutputStream stream = new FileOutputStream(videoDir + File.separator +
+                        result.getName() + ".mp4");
+                stream.write(Base64.getDecoder().decode(media));
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
