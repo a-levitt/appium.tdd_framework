@@ -5,6 +5,7 @@ target/
 
 src/main/resources/app/*
 Screenshots
+test-output
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
