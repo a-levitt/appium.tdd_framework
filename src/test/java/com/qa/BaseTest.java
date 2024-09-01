@@ -20,6 +20,7 @@ public class BaseTest {
     protected static AppiumDriver driver;
     protected static Properties props;
     protected static HashMap<String, String>  strings = new HashMap<>();
+    protected static String dateTime;
     public static String platform;
     InputStream inputStream;
     InputStream stringsis;
@@ -29,8 +30,10 @@ public class BaseTest {
     @Parameters({"emulator", "platformName", "platformVersion", "udid", "deviceName"})
     @BeforeTest
     public void beforeTest(String emulator, String platformName, String platformVersion, String deviceName, String udid) throws Exception {
+        utils = new TestUtils();
         platform = platformName;
         URL url;
+        dateTime = utils.getDateTime();
         try {
             props = new Properties();
             String propFileName = "config.properties";
@@ -40,7 +43,7 @@ public class BaseTest {
             props.load(inputStream);
 
             stringsis = getClass().getClassLoader().getResourceAsStream(xmlFilename);
-            utils = new TestUtils();
+
             strings= utils.parseStringXML(stringsis);
 
             switch (platformName) {
@@ -141,5 +144,9 @@ public class BaseTest {
 
     public AppiumDriver getDriver() {
         return driver;
+    }
+
+    public String getDateTime() {
+        return dateTime;
     }
 }
