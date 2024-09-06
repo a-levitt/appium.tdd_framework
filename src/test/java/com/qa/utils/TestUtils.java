@@ -1,5 +1,6 @@
 package com.qa.utils;
 
+import com.qa.BaseTest;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -52,5 +53,32 @@ public class TestUtils {
         Date date = new Date();
         System.out.println(dateFormat.format(date));
         return dateFormat.format(date);
+    }
+
+    public void  log(String txt) {
+        BaseTest base = new BaseTest();
+        String msg = Thread.currentThread().getId() + ":" + base.getPlatform() + ":" + base.getDeviceName() + ":"
+                + Thread.currentThread().getStackTrace()[2].getClassName() + ":" + txt;
+
+        System.out.println(msg);
+
+        String strFile = "logs" + File.separator + base.getPlatform() + "_" + base.getDeviceName()
+                + File.separator + base.getDateTime();
+
+        File logFile = new File(strFile);
+
+        if (!logFile.exists()) {
+            logFile.mkdirs();
+        }
+
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter(logFile + File.separator + "log.txt", true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        printWriter.println(msg);
+        printWriter.close();
     }
 }

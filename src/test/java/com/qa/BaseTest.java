@@ -25,6 +25,7 @@ public class BaseTest {
     protected static ThreadLocal<HashMap<String, String>>  strings = new ThreadLocal<HashMap<String, String>>();
     protected static ThreadLocal<String> dateTime = new ThreadLocal<String>();
     protected static ThreadLocal<String> platform = new ThreadLocal<String>();
+    protected static ThreadLocal<String> deviceName = new ThreadLocal<String>();
     TestUtils utils;
 
     public static AppiumDriver getDriver() {
@@ -67,13 +68,24 @@ public class BaseTest {
         dateTime.set(dateTime2);
     }
 
-    @Parameters({"emulator", "platformName", "platformVersion", "udid", "deviceName"})
+    public String getDeviceName() {
+        return deviceName.get();
+    }
+
+    public void setDeviceName(String deviceName2) {
+        deviceName.set(deviceName2);
+    }
+
+    // "chromeDevicePort" for webView Android "webkitDebugProxyPort" for webView iOS
+    //  @Optional("iOSOnly")int wdaLocalPort
+    @Parameters({"emulator", "platformName", "platformVersion", "udid", "deviceName", "systemPort", "wdaLocalPort"})
     @BeforeTest
-    public void beforeTest(String emulator, String platformName, String platformVersion, String deviceName, String udid) throws Exception {
+    public void beforeTest(@Optional("androidOnly")String emulator, String platformName, String platformVersion, String deviceName, String udid, @Optional("androidOnly")int systemPort) throws Exception {
         InputStream inputStream = null;
         InputStream stringsis = null;
         utils = new TestUtils();
         setPlatform(platformName);
+        setDeviceName(deviceName);
         URL url;
         setDateTime(utils.dateTime());
         Properties props = new Properties();
@@ -82,6 +94,7 @@ public class BaseTest {
             props = new Properties();
             String propFileName = "config.properties";
             String xmlFilename = "strings/strings.xml";
+            url = new URL(props.getProperty("appiumURL") + "4723");
 
             inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
             props.load(inputStream);
@@ -101,6 +114,8 @@ public class BaseTest {
                     UiAutomator2Options options = new UiAutomator2Options()
                             .setPlatformName(platformName)
                             .setDeviceName(deviceName)
+                            //.setPlatformVersion(platformVersion)
+                            //.setUdid(udid)
                     ;
                     options.setAutomationName(props.getProperty("AndroidAutomationName"));
                     if (emulator.equalsIgnoreCase("true")) {
@@ -112,13 +127,12 @@ public class BaseTest {
                         options.setUnlockType("pattern");
                         options.setUnlockKey("1532589");
                     }
+                    options.setSystemPort(systemPort);
 
                     options.setAppWaitActivity(props.getProperty("AndroidAppWaitActivity"));
                     options.setAppPackage(props.getProperty("AndroidAppPackage"));
                     options.setAppActivity(props.getProperty("AndroidAppActivity"));
                     options.setApp(AndroidAppPath);
-
-                    url = new URL(props.getProperty("appiumURL"));
 
                     driver = new AndroidDriver(url, options);
                     break;
@@ -129,6 +143,7 @@ public class BaseTest {
                             .setPlatformVersion(platformVersion)
                             .setDeviceName(deviceName)
                     ;
+                    //iOSOptions.setWdaLocalPort(wdaLocalPort);
                     iOSOptions.setAutomationName(props.getProperty("iOSAutomationName"));
                     iOSOptions.setBundleId(props.getProperty("iOSBundleId"));
                     iOSOptions.simpleIsVisibleCheck();
@@ -138,8 +153,6 @@ public class BaseTest {
                                     "main" + File.separator + "resources" + File.separator +
                                     "app" + File.separator + "iOS.Simulator.SauceLabs.Mobile.Sample.app.2.7.1.app";
                     iOSOptions.setApp(iOSAppPath);
-
-                    url = new URL(props.getProperty("appiumURL"));
 
                     driver = new IOSDriver(url, iOSOptions);
                     break;

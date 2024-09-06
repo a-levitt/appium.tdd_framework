@@ -8,6 +8,7 @@
         <parameter name="emulator" value="true"/>
         <parameter name="platformName" value="Android" />
         <parameter name="platformVersion" value="13" />
+        <parameter name="udid" value="emulator-5554" />
         <parameter name="deviceName" value="Pixel 8 virt" />
         <parameter name="systemPort" value="10000" />
         <!--<parameter name="chromeDriverPort" value="11000" /> for webview apps-->
@@ -28,7 +29,7 @@
         <parameter name="emulator" value="false"/>
         <parameter name="platformName" value="Android" />
         <!--<parameter name="platformName" value="iOS" /> for iOS-->
-        <!--<parameter name="platformVersion" value="13" />-->
+<!--        <parameter name="platformVersion" value="13" />-->
         <parameter name="udid" value="6985f47b" />
         <parameter name="deviceName" value="Redmi Note 10 Pro" />
         <parameter name="systemPort" value="10001" />
