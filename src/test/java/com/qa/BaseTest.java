@@ -20,19 +20,58 @@ import java.util.Properties;
 
 public class BaseTest {
 
-    protected static AppiumDriver driver;
-    protected static Properties props;
-    protected static HashMap<String, String>  strings = new HashMap<>();
-    protected static String dateTime;
-    public static String platform;
-    InputStream inputStream;
-    InputStream stringsis;
+    protected static ThreadLocal<AppiumDriver> driver = new ThreadLocal<AppiumDriver>();
+    protected static ThreadLocal<Properties> props = new ThreadLocal<Properties>();
+    protected static ThreadLocal<HashMap<String, String>>  strings = new ThreadLocal<HashMap<String, String>>();
+    protected static ThreadLocal<String> dateTime = new ThreadLocal<String>();
+    protected static ThreadLocal<String> platform = new ThreadLocal<String>();
     TestUtils utils;
 
+    public AppiumDriver getDriver() {
+        return driver.get();
+    }
+
+    public void setDriver(AppiumDriver driver2) {
+        driver.set(driver2);
+    }
+
+    public Properties getProps() {
+        return props.get();
+    }
+
+    public void setProps(Properties props2) {
+        props.set(props2);
+    }
+
+    public HashMap<String, String> getStrings() {
+        return strings.get();
+    }
+
+    public void setStrings(HashMap<String, String> strings2) {
+        strings.set(strings2);
+    }
+
+    public String getPlatform() {
+        return platform.get();
+    }
+
+    public void setPlatform(String platform2) {
+        platform.set(platform2);
+    }
+
+    public String getDateTime() {
+        return dateTime.get();
+    }
+
+    public void setDateTime(String dateTime2) {
+        dateTime.set(dateTime2);
+    }
 
     @Parameters({"emulator", "platformName", "platformVersion", "udid", "deviceName"})
     @BeforeTest
     public void beforeTest(String emulator, String platformName, String platformVersion, String deviceName, String udid) throws Exception {
+        InputStream inputStream;
+        InputStream stringsis;
         utils = new TestUtils();
         platform = platformName;
         URL url;
@@ -174,13 +213,5 @@ public class BaseTest {
                 ((InteractsWithApps) driver).activateApp(props.getProperty("iOSBundleId"));
                 break;
         }
-    }
-
-    public AppiumDriver getDriver() {
-        return driver;
-    }
-
-    public String getDateTime() {
-        return dateTime;
     }
 }
