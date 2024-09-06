@@ -1,5 +1,6 @@
 package com.qa.pages;
 
+import com.qa.BaseTest;
 import com.qa.utils.TestUtils;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
@@ -10,14 +11,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.HashMap;
 
-import static com.qa.BaseTest.platform;
-
 public class BasePage {
-    protected AppiumDriver driver;
-
-    public BasePage(AppiumDriver driver) {
-        this.driver = driver;
-    }
+    protected AppiumDriver driver = BaseTest.getDriver();
 
     public void waitForVisibility(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TestUtils.WAIT));
@@ -40,7 +35,7 @@ public class BasePage {
     }
 
     public String getText(WebElement element) {
-        switch (platform) {
+        switch (BaseTest.getPlatform()) {
             case "Android":
                 return getAttribute(element, "text");
             case "iOS":
@@ -50,7 +45,7 @@ public class BasePage {
     }
 
     public WebElement scrollToElement() {
-        switch (platform) {
+        switch (BaseTest.getPlatform()) {
             case "Android":
                 return driver.findElement(AppiumBy.androidUIAutomator(
                         "new UiScrollable(new UiSelector().scrollable(true))" +

@@ -1,6 +1,6 @@
 package com.qa.pages;
 
-import io.appium.java_client.AppiumDriver;
+import com.qa.BaseTest;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
@@ -9,8 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 
 public class MenuPage extends BasePage{
 
-    public MenuPage(AppiumDriver driver) {
-        super(driver);
+    public MenuPage() {
+        driver = BaseTest.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -20,6 +20,6 @@ public class MenuPage extends BasePage{
 
     public SettingsPage pressSettingsBtn() {
         click(buttonOpenSettings);
-        return new SettingsPage(driver);
+        return new SettingsPage();
     }
 }

@@ -1,6 +1,6 @@
 package com.qa.pages;
 
-import io.appium.java_client.AppiumDriver;
+import com.qa.BaseTest;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
@@ -9,8 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 
 public class ProductDetailsPage extends MenuPage {
 
-    public ProductDetailsPage(AppiumDriver driver) {
-        super(driver);
+    public ProductDetailsPage() {
+        driver = BaseTest.getDriver();
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -52,6 +52,6 @@ public class ProductDetailsPage extends MenuPage {
 
     public ProductsPage pressBackToProductsBtn() {
         click(buttonReturnToProducts);
-        return new ProductsPage(driver);
+        return new ProductsPage();
     }
 }

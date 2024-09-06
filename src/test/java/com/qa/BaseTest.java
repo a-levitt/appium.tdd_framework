@@ -27,7 +27,7 @@ public class BaseTest {
     protected static ThreadLocal<String> platform = new ThreadLocal<String>();
     TestUtils utils;
 
-    public AppiumDriver getDriver() {
+    public static AppiumDriver getDriver() {
         return driver.get();
     }
 
@@ -51,7 +51,7 @@ public class BaseTest {
         strings.set(strings2);
     }
 
-    public String getPlatform() {
+    public static String getPlatform() {
         return platform.get();
     }
 
@@ -70,12 +70,14 @@ public class BaseTest {
     @Parameters({"emulator", "platformName", "platformVersion", "udid", "deviceName"})
     @BeforeTest
     public void beforeTest(String emulator, String platformName, String platformVersion, String deviceName, String udid) throws Exception {
-        InputStream inputStream;
-        InputStream stringsis;
+        InputStream inputStream = null;
+        InputStream stringsis = null;
         utils = new TestUtils();
-        platform = platformName;
+        setPlatform(platformName);
         URL url;
-        dateTime = utils.getDateTime();
+        setDateTime(utils.getDateTime());
+        Properties props = new Properties();
+        AppiumDriver driver;
         try {
             props = new Properties();
             String propFileName = "config.properties";
@@ -83,10 +85,11 @@ public class BaseTest {
 
             inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
             props.load(inputStream);
+            setProps(props);
 
             stringsis = getClass().getClassLoader().getResourceAsStream(xmlFilename);
 
-            strings= utils.parseStringXML(stringsis);
+            setStrings(utils.parseStringXML(stringsis));
 
             switch (platformName) {
                 case "Android":
@@ -143,7 +146,7 @@ public class BaseTest {
                     throw new Exception("Invalid platform :" + platformName);
 
             }
-
+            setDriver(driver);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -159,12 +162,12 @@ public class BaseTest {
 
     @BeforeMethod
     public void beforeMethod() {
-        ((CanRecordScreen) driver).startRecordingScreen();
+        ((CanRecordScreen) getDriver()).startRecordingScreen();
     }
 
     @AfterMethod
     public void afterMethod(ITestResult result) {
-        String media = ((CanRecordScreen) driver).stopRecordingScreen();
+        String media = ((CanRecordScreen) getDriver()).stopRecordingScreen();
 
         if (result.getStatus() == 2) {
             Map<String, String> params = new HashMap<>();
@@ -190,27 +193,27 @@ public class BaseTest {
 
     @AfterTest
     public void afterTest() {
-        driver.quit();
+        getDriver().quit();
     }
 
     public void closeApp() {
-        switch (platform) {
+        switch (getPlatform()) {
             case "Android":
-                ((InteractsWithApps) driver).terminateApp(props.getProperty("AndroidAppPackage"));
+                ((InteractsWithApps) getDriver()).terminateApp(getProps().getProperty("AndroidAppPackage"));
                 break;
             case "iOS":
-                ((InteractsWithApps) driver).terminateApp(props.getProperty("iOSBundleId"));
+                ((InteractsWithApps) getDriver()).terminateApp(getProps().getProperty("iOSBundleId"));
                 break;
         }
     }
 
     public void launchApp() {
-        switch (platform) {
+        switch (getPlatform()) {
             case "Android":
-                ((InteractsWithApps) driver).activateApp(props.getProperty("AndroidAppPackage"));
+                ((InteractsWithApps) getDriver()).activateApp(getProps().getProperty("AndroidAppPackage"));
                 break;
             case "iOS":
-                ((InteractsWithApps) driver).activateApp(props.getProperty("iOSBundleId"));
+                ((InteractsWithApps) getDriver()).activateApp(getProps().getProperty("iOSBundleId"));
                 break;
         }
     }
