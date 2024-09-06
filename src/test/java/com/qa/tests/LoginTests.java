@@ -36,7 +36,7 @@ public class LoginTests extends BaseTest {
 
     @BeforeMethod
     public void beforeMethod(Method method) {
-        loginPage = new LoginPage(driver);
+        loginPage = new LoginPage();
         System.out.println("\n ***** starting test: " + method.getName() + "***** \n");
     }
 
@@ -86,7 +86,7 @@ public class LoginTests extends BaseTest {
         productsPage = loginPage.pressLogin();
 
         String actualProductsTitle = productsPage.getTitle();
-        String expectedProductsTitle = strings.get("products_title");
+        String expectedProductsTitle = getStrings().get("products_title");
         Assert.assertEquals(actualProductsTitle, expectedProductsTitle);
     }
 
@@ -102,7 +102,7 @@ public class LoginTests extends BaseTest {
 
     public void checkErrorDisplaying(LoginPage page) {
         String actualErrorText = page.getErrorText();
-        String expectedErrorText = strings.get("err_invalid_user_data");
+        String expectedErrorText = getStrings().get("err_invalid_user_data");
         Assert.assertEquals(actualErrorText, expectedErrorText);
     }
 }

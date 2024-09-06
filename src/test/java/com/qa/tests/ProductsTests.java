@@ -43,7 +43,7 @@ public class ProductsTests extends BaseTest {
 
     @BeforeMethod
     public void beforeMethod(Method method) {
-        loginPage = new LoginPage(driver);
+        loginPage = new LoginPage();
         System.out.println("\n ***** starting test: " + method.getName() + "***** \n");
 
         // Fetching the inner map for the key "validUserData"
@@ -62,10 +62,10 @@ public class ProductsTests extends BaseTest {
         SoftAssert sa = new SoftAssert();
 
         String backpackTitle = productsPage.getBackpackTitle();
-        sa.assertEquals(backpackTitle, strings.get("products_backpack_title"));
+        sa.assertEquals(backpackTitle, getStrings().get("products_backpack_title"));
 
         String backpackPrice = productsPage.getBackpackPrice();
-        sa.assertEquals(backpackPrice, strings.get("products_backpack_price"));
+        sa.assertEquals(backpackPrice, getStrings().get("products_backpack_price"));
 
         sa.assertAll();
     }
@@ -78,16 +78,16 @@ public class ProductsTests extends BaseTest {
         productDetailsPage =  productsPage.pressBackpackProduct();
 
         String backpackProductTitle = productDetailsPage.getBackpackTitle();
-        sa.assertEquals(backpackProductTitle, strings.get("product_details_backpack_title"));
+        sa.assertEquals(backpackProductTitle, getStrings().get("product_details_backpack_title"));
 
         String backpackProductDescription = productDetailsPage.getBackpackDescription();
-        sa.assertEquals(backpackProductDescription, strings.get("product_details_backpack_description"));
+        sa.assertEquals(backpackProductDescription, getStrings().get("product_details_backpack_description"));
 
         //productDetailsPage.scrollToBackpackPrice();
         //String backpackProductPrice = productDetailsPage.getBackpackPrice();
 
         String backpackProductPrice = productDetailsPage.scrollToBackpackPriceAndGet();
-        sa.assertEquals(backpackProductPrice, strings.get("product_details_backpack_price"));
+        sa.assertEquals(backpackProductPrice, getStrings().get("product_details_backpack_price"));
 
         productsPage = productDetailsPage.pressBackToProductsBtn();
 
