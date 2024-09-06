@@ -47,7 +47,7 @@ public class TestUtils {
         return stringMap;
     }
 
-    public String getDateTime() {
+    public String dateTime() {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         Date date = new Date();
         System.out.println(dateFormat.format(date));

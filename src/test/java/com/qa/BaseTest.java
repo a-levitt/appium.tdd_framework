@@ -75,7 +75,7 @@ public class BaseTest {
         utils = new TestUtils();
         setPlatform(platformName);
         URL url;
-        setDateTime(utils.getDateTime());
+        setDateTime(utils.dateTime());
         Properties props = new Properties();
         AppiumDriver driver;
         try {
@@ -109,6 +109,8 @@ public class BaseTest {
                         options.setUnlockKey(props.getProperty("deviceUnlockKey"));
                     } else {
                         options.setUdid(udid);
+                        options.setUnlockType("pattern");
+                        options.setUnlockKey("1532589");
                     }
 
                     options.setAppWaitActivity(props.getProperty("AndroidAppWaitActivity"));
@@ -166,7 +168,7 @@ public class BaseTest {
     }
 
     @AfterMethod
-    public void afterMethod(ITestResult result) {
+    public synchronized void afterMethod(ITestResult result) {
         String media = ((CanRecordScreen) getDriver()).stopRecordingScreen();
 
         if (result.getStatus() == 2) {
@@ -176,9 +178,13 @@ public class BaseTest {
                     params.get("platformVersion") + "_" + params.get("deviceName") + File.separator +
                     dateTime + File.separator + result.getTestClass().getRealClass().getSimpleName();
             File videoDir = new File(dir);
-            if (!videoDir.exists()) {
-                videoDir.mkdirs();
+
+            synchronized(videoDir) {
+                if (!videoDir.exists()) {
+                    videoDir.mkdirs();
+                }
             }
+
             try {
                 FileOutputStream stream = new FileOutputStream(videoDir + File.separator +
                         result.getName() + ".mp4");
