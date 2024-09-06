@@ -189,7 +189,7 @@ public class BaseTest {
             params = result.getTestContext().getCurrentXmlTest().getAllParameters();
             String dir = "Videos" + File.separator +  params.get("platformName") + "_" +
                     params.get("platformVersion") + "_" + params.get("deviceName") + File.separator +
-                    dateTime + File.separator + result.getTestClass().getRealClass().getSimpleName();
+                    getDateTime() + File.separator + result.getTestClass().getRealClass().getSimpleName();
             File videoDir = new File(dir);
 
             synchronized(videoDir) {
