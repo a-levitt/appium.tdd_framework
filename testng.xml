@@ -8,10 +8,10 @@
         <parameter name="emulator" value="true"/>
         <parameter name="platformName" value="Android" />
         <parameter name="platformVersion" value="13" />
-        <parameter name="udid" value="REALDEVICEUDID" />
-        <parameter name="deviceName" value="Any device name" />
+        <parameter name="udid" value="DeviceUDID" />
+        <parameter name="deviceName" value="AnyDeviceName" />
         <classes>
-             <class name="com.qa.tests.LoginTests"/>
+             <!--<class name="com.qa.tests.LoginTests"/>-->
              <!-- <class name="com.qa.tests.LoginTests">
                  <methods>
                      <include name="testUserNameNegative"/>

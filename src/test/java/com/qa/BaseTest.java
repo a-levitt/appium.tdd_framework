@@ -1,5 +1,6 @@
 package com.qa;
 
+import com.google.common.io.ByteStreams;
 import com.qa.utils.TestUtils;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.InteractsWithApps;
@@ -8,6 +9,9 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.screenrecording.CanRecordScreen;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
+import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
@@ -28,6 +32,7 @@ public class BaseTest {
     protected static ThreadLocal<HashMap<String, String>>  strings = new ThreadLocal<HashMap<String, String>>();
     protected static ThreadLocal<String> dateTime = new ThreadLocal<String>();
     protected static ThreadLocal<String> platform = new ThreadLocal<String>();
+    protected static AppiumDriverLocalService server;
     TestUtils utils;
     public static Logger log = LogManager.getLogger(BaseTest.class.getName());
 
@@ -69,6 +74,30 @@ public class BaseTest {
 
     public void setDateTime(String dateTime2) {
         dateTime.set(dateTime2);
+    }
+
+    @BeforeSuite
+    public void beforeSuite() {
+        ThreadContext.put("ROUTINGKEY", "ServerLogs");
+        server = getAppiumService();
+        if (!server.isRunning()) {
+            server.start();
+            server.clearOutPutStreams();
+            log.info("Appium server started");
+        } else {
+            log.info("Appium server is already running");
+        }
+    }
+
+    public AppiumDriverLocalService getAppiumService() {
+        return AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
+                .usingDriverExecutable(new File("C:\\Program Files\\nodejs\\node.exe"))
+                .withAppiumJS(new File("C:\\Users\\daski\\AppData\\Roaming\\npm\\node_modules\\appium\\build\\lib\\main.js"))
+                .usingPort(4723)
+                .withArgument(GeneralServerFlag.SESSION_OVERRIDE)
+                .withLogOutput(ByteStreams.nullOutputStream())
+                .withLogFile(new File("ServerLogs/server.log"))
+        );
     }
 
     @Parameters({"emulator", "platformName", "platformVersion", "udid", "deviceName"})
@@ -220,6 +249,12 @@ public class BaseTest {
                 ((InteractsWithApps) getDriver()).terminateApp(getProps().getProperty("iOSBundleId"));
                 break;
         }
+    }
+
+    @AfterSuite
+    public void afterSuite() {
+        server.stop();
+        log.info("Appium server stopped");
     }
 
     public void launchApp() {
