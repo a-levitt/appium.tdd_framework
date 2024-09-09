@@ -10,6 +10,7 @@ import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.screenrecording.CanRecordScreen;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.ThreadContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -81,6 +82,15 @@ public class BaseTest {
         setDateTime(utils.getDateTime());
         Properties props = new Properties();
         AppiumDriver driver;
+
+        String strFile = "logs" + File.separator + platformName + "_" + deviceName;
+        File logFile = new File(strFile);
+        if (!logFile.exists()) {
+            logFile.mkdirs();
+        }
+        //route logs to separate file for each thread
+        ThreadContext.put("ROUTINGKEY", strFile);
+
         try {
             props = new Properties();
             String propFileName = "config.properties";
