@@ -51,7 +51,9 @@ public class ProductsTests extends BaseTest {
 
         // Extracting the username and password
         String username = (String) validUserDataMap.get("username");
+        log.info("Using username: " + username);
         String password =(String) validUserDataMap.get("password");
+        log.info("Using password: " + password);
 
         productsPage = loginPage.logIn(username, password);
     }

@@ -28,7 +28,7 @@ public class BaseTest {
     protected static ThreadLocal<String> dateTime = new ThreadLocal<String>();
     protected static ThreadLocal<String> platform = new ThreadLocal<String>();
     TestUtils utils;
-    static Logger log = LogManager.getLogger(BaseTest.class.getName());
+    public static Logger log = LogManager.getLogger(BaseTest.class.getName());
 
     public static AppiumDriver getDriver() {
         return driver.get();
@@ -73,11 +73,6 @@ public class BaseTest {
     @Parameters({"emulator", "platformName", "platformVersion", "udid", "deviceName"})
     @BeforeTest
     public void beforeTest(String emulator, String platformName, String platformVersion, String deviceName, String udid) throws Exception {
-        log.info("Info message");
-        log.error("Error message");
-        log.debug("Debug message");
-        log.warn("Warning message");
-
         InputStream inputStream = null;
         InputStream stringsis = null;
         utils = new TestUtils();
@@ -125,6 +120,7 @@ public class BaseTest {
                     options.setApp(AndroidAppPath);
 
                     url = new URL(props.getProperty("appiumURL"));
+                    log.info("Appium url(android):" + props.getProperty("appiumURL"));
 
                     driver = new AndroidDriver(url, options);
                     break;
@@ -146,6 +142,7 @@ public class BaseTest {
                     iOSOptions.setApp(iOSAppPath);
 
                     url = new URL(props.getProperty("appiumURL"));
+                    log.info("Appium url(iOS):" + props.getProperty("appiumURL"));
 
                     driver = new IOSDriver(url, iOSOptions);
                     break;

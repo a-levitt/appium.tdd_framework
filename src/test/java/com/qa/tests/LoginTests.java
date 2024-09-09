@@ -47,7 +47,9 @@ public class LoginTests extends BaseTest {
 
         // Extracting the username and password
         String username = (String) invalidUserMap.get("username");
+        log.info("Using username: " + username);
         String password =(String) invalidUserMap.get("password");
+        log.info("Using password: " + password);
 
         loginPage.enterUsername(username);
         loginPage.enterPassword(password);
@@ -63,7 +65,9 @@ public class LoginTests extends BaseTest {
 
         // Extracting the username and password
         String username = (String) invalidPasswordMap.get("username");
+        log.info("Using username: " + username);
         String password =(String) invalidPasswordMap.get("password");
+        log.info("Using password: " + password);
 
         loginPage.enterUsername(username);
         loginPage.enterPassword(password);
@@ -79,7 +83,9 @@ public class LoginTests extends BaseTest {
 
         // Extracting the username and password
         String username = (String) validUserDataMap.get("username");
+        log.info("Using username: " + username);
         String password =(String) validUserDataMap.get("password");
+        log.info("Using password: " + password);
 
         loginPage.enterUsername(username);
         loginPage.enterPassword(password);
