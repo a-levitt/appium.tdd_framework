@@ -8,6 +8,8 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.screenrecording.CanRecordScreen;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -26,6 +28,7 @@ public class BaseTest {
     protected static ThreadLocal<String> dateTime = new ThreadLocal<String>();
     protected static ThreadLocal<String> platform = new ThreadLocal<String>();
     TestUtils utils;
+    static Logger log = LogManager.getLogger(BaseTest.class.getName());
 
     public static AppiumDriver getDriver() {
         return driver.get();
@@ -70,6 +73,11 @@ public class BaseTest {
     @Parameters({"emulator", "platformName", "platformVersion", "udid", "deviceName"})
     @BeforeTest
     public void beforeTest(String emulator, String platformName, String platformVersion, String deviceName, String udid) throws Exception {
+        log.info("Info message");
+        log.error("Error message");
+        log.debug("Debug message");
+        log.warn("Warning message");
+
         InputStream inputStream = null;
         InputStream stringsis = null;
         utils = new TestUtils();
