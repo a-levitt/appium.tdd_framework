@@ -7,6 +7,7 @@ import com.qa.pages.LoginPage;
 import com.qa.pages.ProductDetailsPage;
 import com.qa.pages.ProductsPage;
 import com.qa.pages.SettingsPage;
+import com.qa.utils.DeepLink;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
@@ -37,8 +38,8 @@ public class ProductsTests extends BaseTest {
             throw e;
         }
 
-        closeApp();
-        launchApp();
+        //closeApp();
+        //launchApp();
     }
 
     @BeforeMethod
@@ -46,7 +47,7 @@ public class ProductsTests extends BaseTest {
         loginPage = new LoginPage();
         System.out.println("\n ***** starting test: " + method.getName() + "***** \n");
 
-        // Fetching the inner map for the key "validUserData"
+        /*// Fetching the inner map for the key "validUserData"
         Map<String, Object> validUserDataMap = map.get("validUserData");
 
         // Extracting the username and password
@@ -55,7 +56,10 @@ public class ProductsTests extends BaseTest {
         String password =(String) validUserDataMap.get("password");
         log.info("Using password: " + password);
 
-        productsPage = loginPage.logIn(username, password);
+        productsPage = loginPage.logIn(username, password);*/
+
+        DeepLink.OpenAppWith("swaglabs://swag-overview/0,1");
+        productsPage = new ProductsPage();
     }
 
     @Test
@@ -100,8 +104,8 @@ public class ProductsTests extends BaseTest {
     public void afterMethod() {
         //settingsPage = productsPage.pressSettingsBtn();
         //loginPage = settingsPage.pressLogoutBtn();
-        closeApp();
-        launchApp();
+        //closeApp();
+        //launchApp();
     }
 
     @AfterClass
